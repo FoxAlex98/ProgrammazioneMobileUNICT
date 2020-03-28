@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyToDoList</string>
+    <string name="insert_button">Inserisci</string>
+    <string name="delete_button">Cancella</string>
+    <string name="update_button">Aggiorna</string>
+    <string name="edit_text_placeholder">Inserisci un Task</string>
+</resources>

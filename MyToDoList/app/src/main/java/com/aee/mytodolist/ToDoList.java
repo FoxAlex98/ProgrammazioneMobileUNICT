@@ -93,9 +93,68 @@ public class ToDoList extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        Toast t;
-        t = Toast.makeText(getApplicationContext(),"OnStart", Toast.LENGTH_SHORT);
-        t.show();
+        loadData();
+        Toast.makeText(getApplicationContext(),"OnStart", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadData();
+        Toast.makeText(getApplicationContext(), "OnResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        saveData();
+        Toast.makeText(getApplicationContext(), "OnStop", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void saveData(){
+
+        try {
+            FileOutputStream fos = openFileOutput("tdlfile", Context.MODE_PRIVATE);
+
+            for(int i=0;i<myToDoList.size();i++){
+                try{
+                    String s = myToDoList.get(i) + "#";
+                    fos.write(s.getBytes());
+                }catch(IOException ioe){
+                    ioe.printStackTrace();
+                }
+            }
+            fos.close();
+            Toast.makeText(getApplicationContext(), "Salvataggio Completato", Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void loadData(){
+        try{
+            FileInputStream fis = new FileInputStream("tdlfile");
+            StringBuffer fileBuffer = new StringBuffer("");
+
+            byte[] buffer = new byte[1024];
+            String[] list = null;
+
+            if(fis.read(buffer) != -1){
+                String items = new String(buffer);
+                list = items.split("#");
+            }
+
+            for(int i=0;i<list.length-1;i++)
+                myToDoList.add(list[i]);
+
+            Toast.makeText(getApplicationContext(), "Caricamento completato", Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 

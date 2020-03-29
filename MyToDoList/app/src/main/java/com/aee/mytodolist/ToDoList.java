@@ -1,11 +1,13 @@
 package com.aee.mytodolist;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,6 +15,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ToDoList extends AppCompatActivity {
@@ -21,7 +27,8 @@ public class ToDoList extends AppCompatActivity {
     public ArrayList<String> myToDoList;
     public CustomAdapter myArrayAdapter;
     public ListView myListView;
-    private static int indexUp;
+    public Button insButton, delButton, upButton;
+    public static int indexUp;
 
     @Override
     public void onCreate(Bundle bundle){
@@ -31,6 +38,9 @@ public class ToDoList extends AppCompatActivity {
 
         myListView = (ListView) findViewById(R.id.myListView);
         myEditText = (EditText) findViewById(R.id.myEditView);
+        insButton = (Button) findViewById(R.id.InsertButton);
+        delButton = (Button) findViewById(R.id.DeleteButton);
+        upButton = (Button) findViewById(R.id.UpdateButton);
 
         myToDoList = new ArrayList<String>();
 
@@ -39,29 +49,15 @@ public class ToDoList extends AppCompatActivity {
         myArrayAdapter = new CustomAdapter(this, resID, myToDoList);
         myListView.setAdapter(myArrayAdapter);
 
-        //myArrayAdapter.notifyDataSetChanged();
+        //Listeners
 
+        MyClickListener mc = new MyClickListener(myEditText,myToDoList,myArrayAdapter);
 
+        insButton.setOnClickListener(mc);
+        delButton.setOnClickListener(mc);
+        upButton.setOnClickListener(mc);
 
-        myEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction() == KeyEvent.ACTION_DOWN)
-                    if(keyCode == KeyEvent.KEYCODE_ENTER){
-                        if(indexUp == -1)
-                            myToDoList.add(0,myEditText.getText().toString());
-                        else
-                        {
-                            myToDoList.set(indexUp,myEditText.getText().toString());
-                            indexUp=-1;
-                        }
-                        myEditText.setText("");
-                        myArrayAdapter.notifyDataSetChanged();
-                        return true;
-                    }
-                return false;
-            }
-        });
+        myEditText.setOnKeyListener(new MyKeyListener(myEditText,myToDoList,myArrayAdapter));
 
         myListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -77,7 +73,6 @@ public class ToDoList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 myEditText.setText(myToDoList.get(position));
                 indexUp = position;
-
             }
         });
 

@@ -4,5 +4,7 @@
     <string name="insert_button">Inseriscis</string>
     <string name="delete_button">Cancellas</string>
     <string name="update_button">Aggiornas</string>
+    <string name="save_button">Saves</string>
+    <string name="load_button">Loads</string>
     <string name="edit_text_placeholder">Inseriscis un Tasks</string>
 </resources>

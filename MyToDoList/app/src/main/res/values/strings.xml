@@ -4,5 +4,7 @@
     <string name="insert_button">Insert</string>
     <string name="delete_button">Delete</string>
     <string name="update_button">Update</string>
+    <string name="save_button">Save</string>
+    <string name="load_button">Load</string>
     <string name="edit_text_placeholder">Now To Do Task</string>
 </resources>

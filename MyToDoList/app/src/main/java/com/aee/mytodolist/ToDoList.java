@@ -89,7 +89,6 @@ public class ToDoList extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         loadData();
-        Toast.makeText(getApplicationContext(),"OnStart", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -97,21 +96,25 @@ public class ToDoList extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         loadData();
-        Toast.makeText(getApplicationContext(), "OnResume", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onStop(){
         super.onStop();
         saveData();
-        Toast.makeText(getApplicationContext(), "OnStop", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveData();
+    }
 
     public void saveData(){
 
+        FileOutputStream fos = null;
         try {
-            FileOutputStream fos = openFileOutput("tdlfile", Context.MODE_PRIVATE);
+            fos = openFileOutput("tdlfile", Context.MODE_PRIVATE);
 
             for(int i=0;i<myToDoList.size();i++){
                 try{
@@ -130,8 +133,9 @@ public class ToDoList extends AppCompatActivity {
     }
 
     public void loadData(){
+        FileInputStream fis = null;
         try{
-            FileInputStream fis = new FileInputStream("tdlfile");
+            fis = new FileInputStream("tdlfile");
             StringBuffer fileBuffer = new StringBuffer("");
 
             byte[] buffer = new byte[1024];
@@ -146,11 +150,19 @@ public class ToDoList extends AppCompatActivity {
                 myToDoList.add(list[i]);
 
             Toast.makeText(getApplicationContext(), "Caricamento completato", Toast.LENGTH_SHORT).show();
-
+            fis.close();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
 
+    public void saveItem(View view) {
+        saveData();
+    }
+
+
+    public void loadItem(View view) {
+        loadData();
+    }
 }

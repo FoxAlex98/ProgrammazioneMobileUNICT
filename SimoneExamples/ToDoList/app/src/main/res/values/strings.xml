@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="descr_name">Description</string>
+    <string name="btnAddString">ADD</string>
+    <string name="editTextHintString">Insert a to do item</string>
+    <string name="hintDescrString">Insert a description</string>
+    <string name="btnDescrString">SEND</string>
+</resources>

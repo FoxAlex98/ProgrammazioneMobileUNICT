@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="descr_name">Descrizione</string>
+    <string name="btnAddString">AGGIUNGI</string>
+    <string name="editTextHintString">Inserisci un elemento</string>
+    <string name="hintDescrString">Inserisci una descrizione</string>
+    <string name="btnDescrString">INVIA</string>
+</resources>
